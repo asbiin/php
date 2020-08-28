@@ -24,6 +24,7 @@ env:
   - VERSION=7.3 VARIANT=buster/zts
   - VERSION=7.3 VARIANT=stretch/cli
   - VERSION=7.3 VARIANT=stretch/apache
+  - VERSION=7.3 VARIANT=stretch/apache ARCH=i386
   - VERSION=7.3 VARIANT=stretch/fpm
   - VERSION=7.3 VARIANT=stretch/zts
   - VERSION=7.3 VARIANT=alpine3.12/cli
@@ -55,6 +56,7 @@ before_script:
   - wget -qO- 'https://github.com/tianon/pgp-happy-eyeballs/raw/master/hack-my-builds.sh' | bash
   - cd "$VERSION/$VARIANT"
   - slash='/'; image="php:${VERSION}-${VARIANT//$slash/-}"
+  - if [ "$ARCH" = "i386" ]; then sed -i -e 's/FROM debian/FROM i386\/debian/g' Dockerfile; fi
 
 script:
   - |
